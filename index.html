@@ -109,6 +109,7 @@ h2{font-size:1.6rem;color:var(--pink);margin-bottom:10px;}
   gap:30px;
 }
 
+/* hide broken images completely */
 .kitty{
   width:80%;
   max-width:260px;
@@ -168,7 +169,7 @@ h2{font-size:1.6rem;color:var(--pink);margin-bottom:10px;}
   <button onclick="unlock()">Enter</button>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- CONTENT -->
 <div id="content">
 
 <section>
@@ -183,8 +184,8 @@ h2{font-size:1.6rem;color:var(--pink);margin-bottom:10px;}
 
 <section>
   <div class="kitty-wrap">
-    <img src="./kitty-love.png" class="kitty" alt="Kitty Love">
-    <img src="./kitty-close.png" class="kitty small" alt="Kitty Close">
+    <img src="./kitty-love.png" class="kitty" onerror="this.style.display='none'">
+    <img src="./kitty-close.png" class="kitty small" onerror="this.style.display='none'">
   </div>
 </section>
 
@@ -275,6 +276,13 @@ btn.onclick=()=>{
   }
 };
 
+/* force loop in ALL browsers */
+music.addEventListener("ended",()=>{
+  music.currentTime=0;
+  music.play();
+});
+
+/* hearts */
 const hearts=["💜","💖","❤️","🎀"];
 setInterval(()=>{
   const e=document.createElement("div");
