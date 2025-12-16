@@ -64,7 +64,6 @@ body{
   cursor:pointer;
 }
 
-/* MAIN CONTENT */
 #content{display:none;}
 
 section{
@@ -116,7 +115,10 @@ h2{font-size:1.6rem;color:var(--pink);margin-bottom:10px;}
   animation:float 4s ease-in-out infinite;
 }
 
-.kitty.small{max-width:220px;opacity:0.9;}
+.kitty.small{
+  max-width:220px;
+  opacity:0.9;
+}
 
 @keyframes float{
   0%{transform:translateY(0);}
@@ -159,14 +161,14 @@ h2{font-size:1.6rem;color:var(--pink);margin-bottom:10px;}
 
 <body>
 
-<!-- LOCK -->
+<!-- LOCK SCREEN -->
 <div id="lockScreen">
   <h1>L & Leona 💜</h1>
   <input id="pass" type="password" placeholder="password">
   <button onclick="unlock()">Enter</button>
 </div>
 
-<!-- CONTENT -->
+<!-- MAIN CONTENT -->
 <div id="content">
 
 <section>
@@ -181,8 +183,8 @@ h2{font-size:1.6rem;color:var(--pink);margin-bottom:10px;}
 
 <section>
   <div class="kitty-wrap">
-    <img src="./kitty-love.png" class="kitty">
-    <img src="./kitty-close.png" class="kitty small">
+    <img src="./kitty-love.png" class="kitty" alt="Kitty Love">
+    <img src="./kitty-close.png" class="kitty small" alt="Kitty Close">
   </div>
 </section>
 
@@ -244,7 +246,7 @@ SOOOO CUTEEEEE 💜💜💜
 </div>
 
 <!-- MUSIC -->
-<audio id="bgMusic">
+<audio id="bgMusic" loop>
   <source src="./music.mp3" type="audio/mpeg">
 </audio>
 
@@ -252,6 +254,9 @@ SOOOO CUTEEEEE 💜💜💜
 
 <script>
 let playing=false;
+const music=document.getElementById("bgMusic");
+const btn=document.getElementById("musicBtn");
+music.volume=0.4;
 
 function unlock(){
   if(document.getElementById("pass").value==="leona"){
@@ -260,15 +265,13 @@ function unlock(){
   }
 }
 
-const music=document.getElementById("bgMusic");
-const btn=document.getElementById("musicBtn");
-music.volume=0.4;
-
 btn.onclick=()=>{
   if(!playing){
     music.play().then(()=>{btn.textContent="⏸️";playing=true;});
   }else{
-    music.pause();btn.textContent="▶️";playing=false;
+    music.pause();
+    btn.textContent="▶️";
+    playing=false;
   }
 };
 
