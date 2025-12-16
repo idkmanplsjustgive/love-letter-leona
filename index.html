@@ -23,6 +23,50 @@ body{
   overflow-x:hidden;
 }
 
+/* LOCK SCREEN */
+#lockScreen{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg,var(--purple),var(--pink));
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  text-align:center;
+}
+
+#lockScreen h1{
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;
+  margin-bottom:20px;
+  animation:glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px white;}
+  to{text-shadow:0 0 30px white;}
+}
+
+#lockScreen input{
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  text-align:center;
+  font-size:1rem;
+}
+
+#lockScreen button{
+  margin-top:15px;
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+/* MAIN CONTENT */
+#content{display:none;}
+
 section{
   min-height:100vh;
   padding:60px 20px;
@@ -70,13 +114,9 @@ h2{font-size:1.6rem;color:var(--pink);margin-bottom:10px;}
   width:80%;
   max-width:260px;
   animation:float 4s ease-in-out infinite;
-  filter:drop-shadow(0 0 20px rgba(255,255,255,0.35));
 }
 
-.kitty.small{
-  max-width:220px;
-  opacity:0.9;
-}
+.kitty.small{max-width:220px;opacity:0.9;}
 
 @keyframes float{
   0%{transform:translateY(0);}
@@ -94,11 +134,9 @@ h2{font-size:1.6rem;color:var(--pink);margin-bottom:10px;}
   border-radius:50%;
   border:none;
   background:rgba(255,255,255,0.25);
-  backdrop-filter:blur(8px);
   color:white;
   font-size:22px;
   cursor:pointer;
-  box-shadow:0 0 20px rgba(0,0,0,0.3);
   z-index:999;
 }
 
@@ -121,6 +159,16 @@ h2{font-size:1.6rem;color:var(--pink);margin-bottom:10px;}
 
 <body>
 
+<!-- LOCK -->
+<div id="lockScreen">
+  <h1>L & Leona 💜</h1>
+  <input id="pass" type="password" placeholder="password">
+  <button onclick="unlock()">Enter</button>
+</div>
+
+<!-- CONTENT -->
+<div id="content">
+
 <section>
   <div>
     <h1 class="glow">Chapter 1. Love In Sight 💜</h1>
@@ -133,8 +181,8 @@ h2{font-size:1.6rem;color:var(--pink);margin-bottom:10px;}
 
 <section>
   <div class="kitty-wrap">
-    <img src="kitty-love.png" class="kitty" alt="Kitty Love">
-    <img src="kitty-close.png" class="kitty small" alt="Kitty Close">
+    <img src="./kitty-love.png" class="kitty">
+    <img src="./kitty-close.png" class="kitty small">
   </div>
 </section>
 
@@ -193,46 +241,48 @@ SOOOO CUTEEEEE 💜💜💜
 </div>
 </section>
 
+</div>
+
 <!-- MUSIC -->
 <audio id="bgMusic">
-  <source src="music.mp3" type="audio/mpeg">
+  <source src="./music.mp3" type="audio/mpeg">
 </audio>
 
 <button id="musicBtn">▶️</button>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const music = document.getElementById("bgMusic");
-  const btn = document.getElementById("musicBtn");
-  let playing = false;
+let playing=false;
 
-  music.volume = 0.4;
+function unlock(){
+  if(document.getElementById("pass").value==="leona"){
+    document.getElementById("lockScreen").style.display="none";
+    document.getElementById("content").style.display="block";
+  }
+}
 
-  btn.addEventListener("click", () => {
-    if (!playing) {
-      music.play().then(() => {
-        btn.textContent = "⏸️";
-        playing = true;
-      });
-    } else {
-      music.pause();
-      btn.textContent = "▶️";
-      playing = false;
-    }
-  });
+const music=document.getElementById("bgMusic");
+const btn=document.getElementById("musicBtn");
+music.volume=0.4;
 
-  const hearts=["💜","💖","❤️","🎀"];
-  setInterval(()=>{
-    const e=document.createElement("div");
-    e.className="particle";
-    e.textContent=hearts[Math.floor(Math.random()*hearts.length)];
-    e.style.left=Math.random()*100+"vw";
-    e.style.fontSize=(16+Math.random()*20)+"px";
-    e.style.animationDuration=(6+Math.random()*6)+"s";
-    document.body.appendChild(e);
-    setTimeout(()=>e.remove(),12000);
-  },400);
-});
+btn.onclick=()=>{
+  if(!playing){
+    music.play().then(()=>{btn.textContent="⏸️";playing=true;});
+  }else{
+    music.pause();btn.textContent="▶️";playing=false;
+  }
+};
+
+const hearts=["💜","💖","❤️","🎀"];
+setInterval(()=>{
+  const e=document.createElement("div");
+  e.className="particle";
+  e.textContent=hearts[Math.floor(Math.random()*hearts.length)];
+  e.style.left=Math.random()*100+"vw";
+  e.style.fontSize=(16+Math.random()*20)+"px";
+  e.style.animationDuration=(6+Math.random()*6)+"s";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),12000);
+},400);
 </script>
 
 </body>
